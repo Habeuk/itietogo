@@ -1,0 +1,5 @@
+name: "itietogo"
+type: module
+description: "Module for advance customizations on itietogo"
+core_version_requirement: 9.x | 10.x
+package: "Custom"
