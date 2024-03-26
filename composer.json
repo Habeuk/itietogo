@@ -1,0 +1,14 @@
+{
+    "name": "habeuk/itietogo",
+    "description": "module custom for itietogo",
+    "type": "drupal-custom-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kouwa stephane",
+            "email": "kksasteph888@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
