@@ -1,10 +1,10 @@
 <?php
 
 /**
+ *
  * @file
  * Contains itietogo.module.
  */
-
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
@@ -15,20 +15,15 @@ use Drupal\Core\Template\Attribute;
  */
 function itietogo_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-      // Main module help for the itietogo module.
+    // Main module help for the itietogo module.
     case 'help.page.itietogo':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Module for advance customizations on itietogo') . '</p>';
       return $output;
-
+    
     default:
   }
-}
-
-
-function itietogo_views_pre_render(ViewExecutable $view) {
-  // dd($view);
 }
 
 function itietogo_preprocess_views_view_render_page(&$vars) {
@@ -38,45 +33,63 @@ function itietogo_preprocess_views_view_render_page(&$vars) {
   if (count($splited_path_alias) >= 4 && $splited_path_alias[2] == "phototheque") {
     if (isset($vars["rows"]["attributes"])) {
       $vars["rows"]["attributes"]->addClass("row");
-    } else {
-      $vars["rows"]["attributes"] = new Attribute(["class" => "row"]);
+    }
+    else {
+      $vars["rows"]["attributes"] = new Attribute([
+        "class" => "row"
+      ]);
     }
   }
 }
 
-function itietogo_preprocess_views_view_unformatted($vars) {
+function itietogo_preprocess_views_view_unformatted(&$vars) {
   $current_path = \Drupal::service('path.current')->getPath();
   $splited_path_alias = explode("/", \Drupal::service('path_alias.manager')->getAliasByPath($current_path));
   if (count($splited_path_alias) >= 4 && $splited_path_alias[2] == "phototheque") {
-
     foreach ($vars["rows"] as &$row) {
       /**
+       *
        * @var \Drupal\Core\Template\Attribute $attributes
        */
       $attribute = &$row["attributes"];
-      $attribute->addClass(["col-md-4", "col-sm-5"]);
+      $attribute->addClass([
+        "col-md-4",
+        "col-sm-5"
+      ]);
     }
-  }
-}
-
-
-function itietogo_preprocess_region($vars) {
-  if ($vars["region"] == "content") {
-    // dump($vars);
   }
 }
 
 function itietogo_preprocess_page(&$variables) {
   // dump($variables);
   /**
-   * @var  Drupal\Core\Path\CurrentPathStack
+   *
+   * @var Drupal\Core\Path\CurrentPathStack
    */
   $current_path = \Drupal::service("path.current");
   $splited_path = explode("/", $current_path->getPath());
   if ($splited_path[1] == "taxonomy" && $splited_path[3] == 54) {
-    //désactivation de la section de gauche
+    // désactivation de la section de gauche
     $variables["page"]["sidebar_left"]["#access"] = false;
-    //Désactivatin de la bannière des autres taxonomies;
+    // Désactivatin de la bannière des autres taxonomies;
     $variables["page"]["hero_slider"]["drush_site_install_entetetermsdocuments"]["#access"] = false;
+  }
+}
+
+/**
+ * //
+ * //
+ */
+function itietogo_preprocess_file_link(&$vars) {
+  dump($vars);
+  if (empty($vars['link']['#options'])) {
+    $titre = !empty($vars['description']) ? $vars['description'] : $vars['link']['#title'];
+    $vars['link']['#title'] = $titre;
+    $vars['link']['#options'] = [
+      'attributes' => [
+        'target' => '',
+        'class' => []
+      ]
+    ];
   }
 }
