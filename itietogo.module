@@ -81,7 +81,6 @@ function itietogo_preprocess_page(&$variables) {
  * //
  */
 function itietogo_preprocess_file_link(&$vars) {
-  dump($vars);
   if (empty($vars['link']['#options'])) {
     $titre = !empty($vars['description']) ? $vars['description'] : $vars['link']['#title'];
     $vars['link']['#title'] = $titre;
