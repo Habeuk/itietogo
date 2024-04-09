@@ -86,7 +86,7 @@ function itietogo_preprocess_file_link(&$vars) {
     $vars['link']['#title'] = $titre;
     $vars['link']['#options'] = [
       'attributes' => [
-        'target' => '',
+        'target' => '_blank',
         'class' => []
       ]
     ];
